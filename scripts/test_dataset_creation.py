@@ -7,14 +7,14 @@ sys.path.append(str(project_root))
 
 from src.preprocessing.create_dataset import CreateDataset
 
-# Path to experiment folder
+# Path to experiment 
 data_path = project_root / 'data' / 'experiment_2_fietsen_puck'
 
 # Create dataset object
-granularity = 100  # milliseconds
+granularity = 100 
 creator = CreateDataset(base_dir=data_path, granularity_ms=granularity)
 
-# Try to load one sensor file
+# Loading sensor file
 file_name = 'Accelerometer.csv'
 timestamp_col = 'Time (s)' 
 value_cols = ['X (m/s^2)', 'Y (m/s^2)', 'Z (m/s^2)']
@@ -26,5 +26,4 @@ creator.add_numerical_dataset(file_name=file_name,
                                aggregation='avg',
                                prefix=prefix)
 
-# Check the first few rows of the generated dataset
 print(creator.data_table.head(10))
