@@ -22,3 +22,5 @@ def plot_filtered_magnitude(df, granularity_ms):
     plt.legend()
     plt.tight_layout()
     plt.show()
+
+
