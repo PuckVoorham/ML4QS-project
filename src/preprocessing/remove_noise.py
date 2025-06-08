@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from scipy.stats import zscore
+from sklearn.decomposition import PCA
+import numpy as np
 
 # apply 1d kalman filter
 def apply_kalman_filter(series, process_variance=1e-5, measurement_variance=0.1**2):
@@ -24,17 +26,18 @@ def apply_kalman_filter(series, process_variance=1e-5, measurement_variance=0.1*
 
     return pd.Series(xhat, index=series.index)
 
-# Z-score based outlier detection
-def detect_outliers(series, threshold=3.0):
-    z_scores = zscore(series.dropna())
-    outliers = np.abs(z_scores) > threshold
-    return pd.Series(outliers, index=series.dropna().index).reindex(series.index, fill_value=False)
-
-from scipy.signal import butter, filtfilt
-
-# Butterworth low-pass filter
-def apply_lowpass_filter(data, cutoff=2.0, fs=50.0, order=4):
-    nyquist = 0.5 * fs
-    normal_cutoff = cutoff / nyquist
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
-    return filtfilt(b, a, data)
+# Perform PCA on numeric sensor data columns
+def perform_pca(df, time_col="Time (s)", n_components=3):
+    df = df.dropna().copy()
+    time = df[time_col].values
+    
+    axis_cols = [col for col in df.columns if col != time_col and np.issubdtype(df[col].dtype, np.number)]
+    data_matrix = df[axis_cols].values
+    
+    # Dynamically adjust n_components
+    max_components = min(n_components, data_matrix.shape[0], data_matrix.shape[1])
+    
+    pca = PCA(n_components=max_components)
+    principal_components = pca.fit_transform(data_matrix)
+    
+    return time, principal_components, pca.explained_variance_ratio_, pca
