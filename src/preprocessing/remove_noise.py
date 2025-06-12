@@ -5,7 +5,14 @@ from sklearn.decomposition import PCA
 import numpy as np
 
 # apply 1d kalman filter
-def apply_kalman_filter(series, process_variance=1e-5, measurement_variance=0.1**2):
+""" 
+Applies a 1D kalman filter to a pandas series
+
+measurement variance = amount of 'trust' in new measurements, the higher, the more smoothing
+process variance = how quickly the system can 'change'/how strictly the filter should follow the measurements. The higher, the LESS smoothing.
+
+"""
+def apply_kalman_filter(series, process_variance=1e-3, measurement_variance=0.1**2):
     n = len(series)
     xhat = np.zeros(n)
     P = np.zeros(n)
@@ -41,3 +48,22 @@ def perform_pca(df, time_col="Time (s)", n_components=3):
     principal_components = pca.fit_transform(data_matrix)
     
     return time, principal_components, pca.explained_variance_ratio_, pca
+
+
+def apply_lowpass_filter(series, alpha=0.1):
+
+    """
+    Applies a simple 1D low-pass filter to a pandas series
+
+    alpha: float, smoothing factor: the lower, the more smoothing
+    
+    """
+
+    n = len(series)
+    filtered = np.zeros(n)
+    filtered[0] = series.iloc[0] 
+
+    for k in range(1, n):
+        filtered[k] = alpha * series.iloc[k] + (1 - alpha) * filtered[k - 1]
+
+    return pd.Series(filtered, index=series.index)

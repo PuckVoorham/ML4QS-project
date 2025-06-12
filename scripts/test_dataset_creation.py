@@ -8,7 +8,7 @@ sys.path.append(str(project_root))
 from src.preprocessing.create_dataset import CreateDataset
 
 # Path to experiment 
-data_path = project_root / 'data' / 'experiment_2_fietsen_puck'
+data_path = project_root / 'data' / 'experiment_fietsen_puck'
 
 # Create dataset object
 granularity = 100 

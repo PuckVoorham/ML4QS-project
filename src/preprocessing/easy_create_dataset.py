@@ -14,3 +14,6 @@ def load_sensor_csv(file_path, sensor_name):
 
     return df
 
+def load_experiment_data(filepath):
+    return pd.read_csv(filepath)
+
