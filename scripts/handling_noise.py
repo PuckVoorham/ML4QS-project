@@ -1,5 +1,10 @@
 import pandas as pd
+import sys
 from pathlib import Path
+
+project_root = Path(__file__).resolve().parents[1]
+sys.path.append(str(project_root))
+
 from src.preprocessing.remove_noise import apply_kalman_filter
 
 # Bestandsnamen van experimenten
@@ -39,6 +44,10 @@ for name in experiment_names:
             df[f"{col}_kalman"] = apply_kalman_filter(df[col])
         else:
             print(f"⚠️ Kolom niet gevonden: {col} in {name}.csv")
+    
+    # Alleen Kalman-kolommen + Time
+    filtered_cols = ["Time (s)"] + [f"{col}_kalman" for col in sensor_columns if f"{col}_kalman" in df.columns]
+    df_filtered = df[filtered_cols]
 
-    df.to_csv(output_path, index=False)
+    df_filtered.to_csv(output_path, index=False)
     print(f"✅ Opgeslagen naar: {output_path}")
