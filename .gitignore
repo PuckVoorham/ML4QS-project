@@ -1,0 +1,11 @@
+# Negeer raw data mappen
+data/raw/
+data/aggregated_datasets/
+
+# Negeer virtuele omgevingen
+venv/
+.env
+
+# Negeer pycache
+__pycache__/
+
