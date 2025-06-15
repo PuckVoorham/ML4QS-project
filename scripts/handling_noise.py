@@ -9,11 +9,15 @@ from src.preprocessing.remove_noise import apply_kalman_filter
 
 # Bestandsnamen van experimenten
 experiment_names = [
-    "aggregated_auto",
-    "aggregated_fietsen",
-    "aggregated_metro",
-    "aggregated_rennen",
-    "aggregated_trein"
+    "auto",
+    "auto2",
+    "fietsen",
+    "fietsen2",
+    "metro2",
+    "rennen",
+    "rennen2",
+    "trein",
+    "trein2",
 ]
 
 # Sensor-kolommen waarop we Kalman willen toepassen
@@ -26,7 +30,7 @@ sensor_columns = [
 ]
 
 # Paden instellen
-aggregated_dir = Path("data/aggregated_datasets")
+aggregated_dir = Path("data/final_datasets")
 processed_dir = Path("data/processed_datasets")
 processed_dir.mkdir(parents=True, exist_ok=True)
 
@@ -51,3 +55,4 @@ for name in experiment_names:
 
     df_filtered.to_csv(output_path, index=False)
     print(f"✅ Opgeslagen naar: {output_path}")
+ 
