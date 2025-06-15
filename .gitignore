@@ -1,5 +1,5 @@
 # Negeer raw data mappen
-data/raw/
+data/raw_datasets
 data/aggregated_datasets/
 
 # Negeer virtuele omgevingen
@@ -8,4 +8,3 @@ venv/
 
 # Negeer pycache
 __pycache__/
-
