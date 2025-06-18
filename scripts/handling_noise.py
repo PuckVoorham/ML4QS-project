@@ -13,6 +13,7 @@ experiment_names = [
     "auto2",
     "fietsen",
     "fietsen2",
+    "metro",
     "metro2",
     "rennen",
     "rennen2",
@@ -20,7 +21,7 @@ experiment_names = [
     "trein2",
 ]
 
-# Sensor-kolommen waarop we Kalman willen toepassen
+# Sensor-kolommen waarop Kalman wordt toegepast
 sensor_columns = [
     'Accelerometer_X (m/s^2)', 'Accelerometer_Y (m/s^2)', 'Accelerometer_Z (m/s^2)',
     'Gyroscope_X (rad/s)', 'Gyroscope_Y (rad/s)', 'Gyroscope_Z (rad/s)',
